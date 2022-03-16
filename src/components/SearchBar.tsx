@@ -1,23 +1,23 @@
 import { ChangeEvent, useState } from "react";
 import { Form, Stack } from "react-bootstrap";
-import { Filter } from "../store/slices/movie-slice";
 
 interface Props {
-  onFilter: (filter: Filter) => void;
+  onSearch: (search: string) => void;
+  onAvailableSelected: (isAvailable: boolean) => void;
 }
 
-function SearchBar({ onFilter }: Props) {
+function SearchBar({ onSearch, onAvailableSelected }: Props) {
   const [search, setSearch] = useState("");
   const [isAvailable, setIsAvailable] = useState(false);
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
-    onFilter({ search: e.target.value, isAvailable });
+    onSearch(e.target.value);
   };
 
   const handleAvailableChange = (e: ChangeEvent<HTMLInputElement>) => {
     setIsAvailable(e.target.checked);
-    onFilter({ search, isAvailable: e.target.checked });
+    onAvailableSelected(e.target.checked);
   };
 
   return (
