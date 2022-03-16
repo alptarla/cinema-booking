@@ -1,6 +1,7 @@
 import { useEffect } from "react";
-import { Col, Row } from "react-bootstrap";
-import Movie from "../components/Movie";
+import { Alert } from "react-bootstrap";
+import MovieList from "../components/MovieList";
+import PageLoader from "../components/PageLoader";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { getMovies } from "../store/slices/movie-slice";
 
@@ -12,23 +13,15 @@ function HomePage() {
     dispatch(getMovies());
   }, [dispatch]);
 
-  if (status === "error") return <p>{error}</p>;
-  if (status === "loading") return <p>loading...</p>;
+  if (status === "loading") return <PageLoader />;
+  if (status === "error") return <Alert variant="danger">{error}</Alert>;
 
   return (
-    <Row>
-      {movies.map((movie) => (
-        <Col
-          lg={3}
-          md={4}
-          xs={6}
-          key={movie.id}
-          className="p-2"
-        >
-          <Movie movie={movie} />
-        </Col>
-      ))}
-    </Row>
+    <div className="h-100">
+      {/* Search and availability option */}
+      {/* Genres for filtering */}
+      <MovieList movies={movies} />
+    </div>
   );
 }
 
