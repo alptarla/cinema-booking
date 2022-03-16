@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import MovieService, { Movie } from "./../../services/movie-service";
-
-type Status = "idle" | "loading" | "error";
+import { Status } from "./../index";
 
 interface State {
   movies: Movie[];
@@ -31,7 +30,6 @@ const movieSlice = createSlice({
     });
     builder.addCase(getMovies.pending, (state) => {
       state.status = "loading";
-      state.error = null;
     });
     builder.addCase(getMovies.rejected, (state, { error }) => {
       state.status = "error";

@@ -18,6 +18,11 @@ export interface Movie {
   vote_count: number;
 }
 
+export interface Genre {
+  id: string;
+  name: string;
+}
+
 const MovieService = {
   async getMovies(): Promise<Movie[]> {
     const snapshot = await getDocs(collection(db, "movies"));

@@ -1,6 +1,6 @@
 import { Badge, Card, Stack } from "react-bootstrap";
-import { getSmallImageUrl } from "../helpers";
-import { Movie as IMovie } from "../services/movie-service";
+import { getSmallImageUrl } from "../../helpers";
+import { Movie as IMovie } from "../../services/movie-service";
 
 interface Props {
   movie: IMovie;

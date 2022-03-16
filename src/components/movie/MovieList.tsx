@@ -1,5 +1,5 @@
 import { Col, Row } from "react-bootstrap";
-import { Movie as IMovie } from "../services/movie-service";
+import { Movie as IMovie } from "../../services/movie-service";
 import Movie from "./Movie";
 
 interface Props {
