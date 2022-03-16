@@ -1,9 +1,14 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import MovieService, { Movie } from "./../../services/movie-service";
 import { Status } from "./../index";
 
+export type Filter = {
+  search: string;
+  isAvailable: boolean;
+};
 interface State {
   movies: Movie[];
+  filter: Filter;
   status: Status;
   error: string | null;
 }
@@ -14,6 +19,10 @@ const getMovies = createAsyncThunk("movie/getMovies", () => {
 
 const initialState: State = {
   movies: [],
+  filter: {
+    search: "",
+    isAvailable: false,
+  },
   status: "idle",
   error: null,
 };
@@ -21,7 +30,11 @@ const initialState: State = {
 const movieSlice = createSlice({
   name: "movie",
   initialState,
-  reducers: {},
+  reducers: {
+    setFilter(state, { payload }: PayloadAction<Filter>) {
+      state.filter = payload;
+    },
+  },
   extraReducers(builder) {
     builder.addCase(getMovies.fulfilled, (state, { payload }) => {
       state.movies = payload;
@@ -40,3 +53,4 @@ const movieSlice = createSlice({
 
 export default movieSlice.reducer;
 export { getMovies };
+export const { setFilter } = movieSlice.actions;
