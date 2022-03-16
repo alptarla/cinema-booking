@@ -9,18 +9,89 @@ import {
   RegisterPage,
   SeatSelectionPage,
 } from "../pages";
+import { useAppSelector } from "../store/hooks";
+import AuthRoute from "./AuthRoute";
+import PrivateRoute from "./PrivateRoute";
 
 function Router() {
+  const { user } = useAppSelector((state) => state.auth);
+
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegisterPage />} />
-      <Route path="/movie/:id" element={<MovieDetailPage />} />
-      <Route path="/profile" element={<ProfilePage />} />
-      <Route path="/seat" element={<SeatSelectionPage />} />
-      <Route path="/error/:msg" element={<ErrorPage />} />
-      <Route path="*" element={<NotFoundPage />} />
+      <Route
+        path="/"
+        element={
+          <PrivateRoute
+            isAuthenticated={user !== null}
+            redirectPath="/login"
+          >
+            <HomePage />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/login"
+        element={
+          <AuthRoute
+            isAuthenticated={user !== null}
+            redirectPath="/"
+          >
+            <LoginPage />
+          </AuthRoute>
+        }
+      />
+      <Route
+        path="/register"
+        element={
+          <AuthRoute
+            isAuthenticated={user !== null}
+            redirectPath="/"
+          >
+            <RegisterPage />
+          </AuthRoute>
+        }
+      />
+      <Route
+        path="/movie/:id"
+        element={
+          <PrivateRoute
+            isAuthenticated={user !== null}
+            redirectPath="/login"
+          >
+            <MovieDetailPage />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <PrivateRoute
+            isAuthenticated={user !== null}
+            redirectPath="/login"
+          >
+            <ProfilePage />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/seat"
+        element={
+          <PrivateRoute
+            isAuthenticated={user !== null}
+            redirectPath="/login"
+          >
+            <SeatSelectionPage />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/error/:msg"
+        element={<ErrorPage />}
+      />
+      <Route
+        path="*"
+        element={<NotFoundPage />}
+      />
     </Routes>
   );
 }
