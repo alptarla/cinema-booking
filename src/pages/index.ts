@@ -1,8 +1,8 @@
+export { default as LoginPage } from "./auth/LoginPage";
+export { default as RegisterPage } from "./auth/RegisterPage";
 export { default as ErrorPage } from "./ErrorPage";
 export { default as HomePage } from "./HomePage";
-export { default as LoginPage } from "./LoginPage";
 export { default as MovieDetailPage } from "./MovieDetailPage";
 export { default as NotFoundPage } from "./NotFoundPage";
 export { default as ProfilePage } from "./ProfilePage";
-export { default as RegisterPage } from "./RegisterPage";
 export { default as SeatSelectionPage } from "./SeatSelectionPage";

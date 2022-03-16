@@ -1,5 +1,6 @@
 import { ReactChild } from "react";
 import { Container } from "react-bootstrap";
+import { ToastContainer } from "react-toastify";
 import Footer from "./Footer";
 import Header from "./Header";
 
@@ -9,7 +10,14 @@ type Props = {
 
 function Layout({ children }: Props) {
   return (
-    <Container fluid>
+    <Container
+      fluid
+      className="px-0"
+    >
+      <ToastContainer
+        hideProgressBar
+        autoClose={2000}
+      />
       <div id="layout">
         <Header />
         <main id="main">
