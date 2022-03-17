@@ -1,7 +1,8 @@
 import classNames from "classnames";
 import { useEffect, useState } from "react";
-import { Button, Card, Stack } from "react-bootstrap";
+import { Alert, Button, Card, Stack } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import { SeatSelectionLoader } from "../components/loaders";
 import SeatSelectionHeader from "../components/SeatSelectionHeader";
 import { Salon } from "../services/salon-service";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
@@ -67,7 +68,6 @@ function SeatSelectionPage() {
   const renderRow = (key: string, values: number[]) => {
     return values.map((val, i) => (
       <Button
-        size="sm"
         className={getSeatClassNames({ key, value: val })}
         key={i}
         disabled={i === 0 || !val}
@@ -86,11 +86,12 @@ function SeatSelectionPage() {
     };
   });
 
-  if (salonStatus === "loading") return <div>loading...</div>;
-  if (salonStatus === "error") return <div>{salonError}</div>;
+  if (salonStatus === "loading") return <SeatSelectionLoader />;
+  if (salonStatus === "error")
+    return <Alert variant="warning">{salonError}</Alert>;
 
   return (
-    <div className="h-100">
+    <div className="h-100 page-container">
       <SeatSelectionHeader
         salons={salons}
         movieTitle={movie?.title!}

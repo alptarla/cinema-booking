@@ -49,10 +49,7 @@ function MovieDetailPage() {
 
   return (
     <div className="h-100 d-flex flex-column align-items-center justify-content-center">
-      <Card
-        style={{ maxWidth: 1100 }}
-        className="bg-dark border-0 mx-auto"
-      >
+      <Card className="bg-dark border-0 page-container">
         <Card.Img
           className="opacity-25"
           src={getWideImageUrl(movie?.backdrop_path)}
