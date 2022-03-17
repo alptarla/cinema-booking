@@ -61,7 +61,7 @@ function SeatSelectionPage() {
   };
 
   const getSeatClassNames = (seat: Seat) =>
-    classNames("w-100 text-white border-0", [
+    classNames("w-100 text-white border-0 btn-sm btn-md-lg", [
       checkIsSeatSelected(seat) ? "bg-success" : "bg-secondary",
     ]);
 
@@ -86,15 +86,39 @@ function SeatSelectionPage() {
     };
   });
 
+  const saveSeats = () => {
+    //  TODO: set seats to storage
+    console.log("selectedSeats", selectedSeats);
+    // TODO: and display an alert such as success message
+    setSelectedSeats([]);
+  };
+
+  const handleSalonChange = (salon: Salon) => {
+    setSelectedSalon(salon);
+    setSelectedSeats([]);
+  };
+
   if (salonStatus === "loading") return <SeatSelectionLoader />;
-  if (salonStatus === "error")
+  if (salonStatus === "error") {
     return <Alert variant="warning">{salonError}</Alert>;
+  }
 
   return (
-    <div className="h-100 d-flex flex-column align-items-center justify-content-center page-container">
+    <div className="h-100 position-relative d-flex flex-column align-items-center justify-content-center page-container">
+      <Button
+        className="position-absolute top-0 end-0"
+        size="sm"
+        variant="success"
+        disabled={!selectedSeats.length}
+        onClick={saveSeats}
+      >
+        {`Save Seats (${selectedSeats.length})`}
+      </Button>
       <SeatSelectionHeader
         salons={salons}
         movieTitle={movie?.title!}
+        onSalonChange={handleSalonChange}
+        selectedSalon={selectedSalon!}
       />
       <Card className="mt-3 w-100">
         <Card.Body>
