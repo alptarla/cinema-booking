@@ -69,7 +69,7 @@ function MovieFilter() {
       <Button
         size="sm"
         variant="warning"
-        className="position-absolute top-0 end-0 my-1 mx-2"
+        className="position-absolute top-0 end-0 m-2"
         onClick={clearFilters}
         disabled={isClearButtonDisabled}
       >
