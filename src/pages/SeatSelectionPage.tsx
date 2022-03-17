@@ -67,8 +67,6 @@ function SeatSelectionPage() {
       checkIsSeatSelected(seat) ? "bg-success" : "bg-secondary",
     ]);
 
-  console.log("selectedSeats", selectedSeats);
-
   const renderRow = (row: any[]) => {
     return row.map((item, i) => (
       <Button
