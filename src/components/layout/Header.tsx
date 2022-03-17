@@ -1,5 +1,6 @@
 import { Button, Container, Stack } from "react-bootstrap";
 import { BiLogOut, BiMovie } from "react-icons/bi";
+import { Link } from "react-router-dom";
 
 type Props = {
   onLogout: () => void;
@@ -10,7 +11,11 @@ function Header({ onLogout, isAuthenticated }: Props) {
   return (
     <header className="py-3 border-bottom bg-light text-dark">
       <Container>
-        <Stack direction="horizontal">
+        <Stack
+          direction="horizontal"
+          as={Link}
+          to="/"
+        >
           <Stack direction="horizontal">
             <BiMovie
               size={32}
