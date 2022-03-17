@@ -1,6 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Genre } from "../../services/genre-service";
-import MovieService, { Movie } from "./../../services/movie-service";
+import MovieService, {
+  Movie,
+  MovieDetail,
+} from "./../../services/movie-service";
 import { Status } from "./../index";
 
 export type Filters = {
@@ -9,6 +12,7 @@ export type Filters = {
 };
 interface State {
   movies: Movie[];
+  movieDetail: MovieDetail | null;
   filters: Filters;
   status: Status;
   error: string | null;
@@ -21,8 +25,16 @@ const getMovies = createAsyncThunk(
   }
 );
 
+const getMovieDetail = createAsyncThunk(
+  "movie/getMovieDetail",
+  ({ id }: { id: number }) => {
+    return MovieService.getMovieDetail(id);
+  }
+);
+
 const initialState: State = {
   movies: [],
+  movieDetail: null,
   filters: {
     search: "",
     genres: [],
@@ -55,9 +67,21 @@ const movieSlice = createSlice({
       state.status = "error";
       state.error = error.message || "Something went wrong";
     });
+    builder.addCase(getMovieDetail.fulfilled, (state, { payload }) => {
+      state.movieDetail = payload;
+      state.status = "idle";
+      state.error = null;
+    });
+    builder.addCase(getMovieDetail.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(getMovieDetail.rejected, (state, { error }) => {
+      state.status = "error";
+      state.error = error.message || "Something went wrong";
+    });
   },
 });
 
 export default movieSlice.reducer;
-export { getMovies };
+export { getMovies, getMovieDetail };
 export const { updateFilters, setMovies } = movieSlice.actions;

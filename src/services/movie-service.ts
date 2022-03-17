@@ -6,7 +6,7 @@ export interface Movie {
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
-  id: number | string;
+  id: number;
   original_language: string;
   original_title: string;
   overview: string;
@@ -17,6 +17,14 @@ export interface Movie {
   video: false;
   vote_average: number;
   vote_count: number;
+}
+
+export interface MovieDetail extends Omit<Movie, "genres"> {
+  budget: number;
+  genres: Genre[];
+  homepage: string;
+  spoken_languages: { name: string };
+  tagline: string;
 }
 
 const MovieService = {
@@ -31,6 +39,13 @@ const MovieService = {
 
     const snapshot = await getDocs(q);
     return snapshot.docs.map((doc) => doc.data() as Movie);
+  },
+  async getMovieDetail(id: number): Promise<MovieDetail> {
+    const movieDetailRef = collection(db, "movieDetails");
+    const q = query(movieDetailRef, where("id", "==", id));
+    const snapshot = await getDocs(q);
+
+    return snapshot.docs.map((doc) => doc.data())[0] as MovieDetail;
   },
 };
 
