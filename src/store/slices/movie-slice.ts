@@ -5,7 +5,6 @@ import { Status } from "./../index";
 
 export type Filters = {
   search: string;
-  isAvailable: boolean;
   genres: Genre[];
 };
 interface State {
@@ -15,15 +14,17 @@ interface State {
   error: string | null;
 }
 
-const getMovies = createAsyncThunk("movie/getMovies", () => {
-  return MovieService.getMovies();
-});
+const getMovies = createAsyncThunk(
+  "movie/getMovies",
+  ({ genres }: { genres: Genre[] }) => {
+    return MovieService.getMovies(genres);
+  }
+);
 
 const initialState: State = {
   movies: [],
   filters: {
     search: "",
-    isAvailable: false,
     genres: [],
   },
   status: "idle",
@@ -36,6 +37,9 @@ const movieSlice = createSlice({
   reducers: {
     updateFilters(state, { payload }: PayloadAction<Filters>) {
       state.filters = payload;
+    },
+    setMovies(state, { payload }: PayloadAction<Movie[]>) {
+      state.movies = payload;
     },
   },
   extraReducers(builder) {
@@ -56,4 +60,4 @@ const movieSlice = createSlice({
 
 export default movieSlice.reducer;
 export { getMovies };
-export const { updateFilters } = movieSlice.actions;
+export const { updateFilters, setMovies } = movieSlice.actions;

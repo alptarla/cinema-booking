@@ -1,5 +1,6 @@
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../config/firebase";
+import { Genre } from "./genre-service";
 
 export interface Movie {
   adult: boolean;
@@ -18,14 +19,17 @@ export interface Movie {
   vote_count: number;
 }
 
-export interface Genre {
-  id: string;
-  name: string;
-}
-
 const MovieService = {
-  async getMovies(): Promise<Movie[]> {
-    const snapshot = await getDocs(collection(db, "movies"));
+  async getMovies(genres: Genre[]): Promise<Movie[]> {
+    let queries = [];
+    if (genres.length) {
+      const genreIds = genres.map((genre) => genre.id);
+      queries.push(where("genre_ids", "array-contains-any", genreIds));
+    }
+
+    const q = query(collection(db, "movies"), ...queries);
+
+    const snapshot = await getDocs(q);
     return snapshot.docs.map((doc) => doc.data() as Movie);
   },
 };

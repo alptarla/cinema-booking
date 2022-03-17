@@ -10,7 +10,6 @@ import SearchBar from "../SearchBar";
 
 const DEFAULT_FILTERS = {
   search: "",
-  isAvailable: false,
   genres: [],
 };
 
@@ -36,10 +35,6 @@ function MovieFilter() {
 
   const handleSearch = (search: string) => {
     setFilters((prev) => ({ ...prev, search }));
-  };
-
-  const handleAvailable = (isAvailable: boolean) => {
-    setFilters((prev) => ({ ...prev, isAvailable }));
   };
 
   const handleGenre = (genre: Genre) => {
@@ -82,9 +77,7 @@ function MovieFilter() {
       </Button>
       <SearchBar
         searchValue={filters.search}
-        isAvailableValue={filters.isAvailable}
         onSearch={handleSearch}
-        onAvailableSelected={handleAvailable}
       />
       {status === "loading" ? (
         <GenreListLoader />

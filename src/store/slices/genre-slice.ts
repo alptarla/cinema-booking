@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import GenreService from "../../services/genre-service";
-import { Genre } from "./../../services/movie-service";
+import { Genre } from "./../../services/genre-service";
 import { Status } from "./../index";
 
 interface State {
