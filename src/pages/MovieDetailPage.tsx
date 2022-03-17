@@ -27,7 +27,7 @@ function MovieDetailPage() {
     },
     {
       key: "Spoken Language:",
-      value: movie?.spoken_languages.map((lang) => lang.name).join(""),
+      value: movie?.spoken_languages.map((lang) => lang.name).join(", "),
     },
     {
       key: "Release date:",
