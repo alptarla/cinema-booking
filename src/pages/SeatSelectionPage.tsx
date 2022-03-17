@@ -91,12 +91,12 @@ function SeatSelectionPage() {
     return <Alert variant="warning">{salonError}</Alert>;
 
   return (
-    <div className="h-100 page-container">
+    <div className="h-100 d-flex flex-column align-items-center justify-content-center page-container">
       <SeatSelectionHeader
         salons={salons}
         movieTitle={movie?.title!}
       />
-      <Card className="mt-3">
+      <Card className="mt-3 w-100">
         <Card.Body>
           {seatsArr?.map((seat, i) => (
             <Stack

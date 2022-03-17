@@ -8,7 +8,7 @@ interface Props {
 
 function SeatSelectionHeader({ movieTitle, salons }: Props) {
   return (
-    <Card>
+    <Card className="w-100">
       <Card.Body>
         <Card.Title className="text-center">{movieTitle}</Card.Title>
         <Stack
