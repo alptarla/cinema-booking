@@ -39,47 +39,55 @@ function SeatSelectionPage() {
     dispatch(getMovieById({ id: parseInt(params.id!) }));
   }, [params.id, dispatch]);
 
-  if (salonStatus === "loading") return <div>loading...</div>;
-  if (salonStatus === "error") return <div>{salonError}</div>;
-
-  const checkIsSeatSelected = ({ key, value }: Seat) =>
+  const checkIsSeatSelected = (seat: Seat) =>
     selectedSeats.some((item) => {
-      return JSON.stringify(item) === JSON.stringify({ key, value });
+      return JSON.stringify(item) === JSON.stringify(seat);
     });
 
-  const selectSeat = ({ key, value }: Seat) => {
+  const selectSeat = (seat: Seat) => {
     return () => {
-      if (checkIsSeatSelected({ key, value })) {
-        setSelectedSeats((prev) => {
-          return prev.filter((seat) => {
-            return !(seat.key === key && seat.value === value);
-          });
-        });
+      if (!checkIsSeatSelected(seat)) {
+        setSelectedSeats((prev) => [...prev, seat]);
         return;
       }
 
-      setSelectedSeats((prev) => [...prev, { key, value }]);
+      setSelectedSeats((prev) => {
+        return prev.filter((s) => {
+          return !(s.key === seat.key && s.value === seat.value);
+        });
+      });
     };
   };
 
   const getSeatClassNames = (seat: Seat) =>
-    classNames("w-100 text-white", [
+    classNames("w-100 text-white border-0", [
       checkIsSeatSelected(seat) ? "bg-success" : "bg-secondary",
     ]);
 
-  const renderRow = (row: any[]) => {
-    return row.map((item, i) => (
+  const renderRow = (key: string, values: number[]) => {
+    return values.map((val, i) => (
       <Button
         size="sm"
-        className={getSeatClassNames({ key: row[0], value: item })}
+        className={getSeatClassNames({ key, value: val })}
         key={i}
-        disabled={i === 0 || !item}
-        onClick={selectSeat({ key: row[0], value: item })}
+        disabled={i === 0 || !val}
+        onClick={selectSeat({ key, value: val })}
       >
-        {item}
+        {i === 0 ? key : val}
       </Button>
     ));
   };
+
+  const seatsArr = selectedSalon?.seats.map((seat) => {
+    const seatItem = Object.entries(seat)[0];
+    return {
+      key: seatItem[0],
+      values: seatItem[1],
+    };
+  });
+
+  if (salonStatus === "loading") return <div>loading...</div>;
+  if (salonStatus === "error") return <div>{salonError}</div>;
 
   return (
     <div className="h-100">
@@ -89,17 +97,15 @@ function SeatSelectionPage() {
       />
       <Card className="mt-3">
         <Card.Body>
-          {selectedSalon?.seats.map((seat) =>
-            Object.entries(seat).map((item: any[], i) => (
-              <Stack
-                key={i}
-                direction="horizontal"
-                className="gap-2 mb-2 align-items-stretch"
-              >
-                {renderRow(item.flatMap((item) => item))}
-              </Stack>
-            ))
-          )}
+          {seatsArr?.map((seat, i) => (
+            <Stack
+              key={i}
+              direction="horizontal"
+              className="gap-2 mb-2 align-items-stretch"
+            >
+              {renderRow(seat.key, seat.values as number[])}
+            </Stack>
+          ))}
         </Card.Body>
       </Card>
     </div>
