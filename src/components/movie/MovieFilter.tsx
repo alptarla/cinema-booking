@@ -26,7 +26,7 @@ function MovieFilter() {
   }, [dispatch]);
 
   useEffect(() => {
-    // ** not dispatch changes to store, if filters same to filters into store
+    // ** don't dispatch changes to store, if filters same to filters into store
     if (JSON.stringify(filters) === JSON.stringify(storeFilters)) {
       return;
     }
