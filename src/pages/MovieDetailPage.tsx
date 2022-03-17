@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Alert, Badge, Card, ListGroup, Stack } from "react-bootstrap";
 import { ImTicket } from "react-icons/im";
 import { Link, useParams } from "react-router-dom";
+import MovieDetailLoader from "../components/loaders/MovieDetailLoader";
 import { getWideImageUrl } from "../helpers";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { getMovieDetail } from "../store/slices/movie-slice";
@@ -42,7 +43,7 @@ function MovieDetailPage() {
     },
   ];
 
-  if (status === "loading") return <div>loading...</div>;
+  if (status === "loading") return <MovieDetailLoader />;
   if (status === "error") return <div>{error}</div>;
   if (!movie) return <Alert variant="warning">Movie is not found!</Alert>;
 
