@@ -23,3 +23,14 @@ a:hover {
   align-items: stretch;
   gap: 1rem;
 }
+
+.text-truncate-container {
+  width: 100%;
+}
+
+.text-truncate-container p {
+  -webkit-line-clamp: 4;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

@@ -19,11 +19,11 @@ export interface Movie {
   vote_count: number;
 }
 
-export interface MovieDetail extends Omit<Movie, "genres"> {
+export interface MovieDetail extends Omit<Movie, "genre_ids"> {
   budget: number;
   genres: Genre[];
   homepage: string;
-  spoken_languages: { name: string };
+  spoken_languages: { name: string }[];
   tagline: string;
 }
 

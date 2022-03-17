@@ -74,7 +74,7 @@ function Router() {
         }
       />
       <Route
-        path="/seat"
+        path="/seat-selection/:id"
         element={
           <PrivateRoute
             isAuthenticated={user !== null}
