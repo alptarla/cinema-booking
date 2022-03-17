@@ -47,6 +47,13 @@ const MovieService = {
 
     return snapshot.docs.map((doc) => doc.data())[0] as MovieDetail;
   },
+  async getMovieById(id: number): Promise<Movie> {
+    const moviesRef = collection(db, "movies");
+    const q = query(moviesRef, where("id", "==", id));
+    const snapshot = await getDocs(q);
+
+    return snapshot.docs.map((doc) => doc.data())[0] as Movie;
+  },
 };
 
 export default MovieService;

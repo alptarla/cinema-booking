@@ -13,6 +13,7 @@ export type Filters = {
 interface State {
   movies: Movie[];
   movieDetail: MovieDetail | null;
+  selectedMovie: Movie | null;
   filters: Filters;
   status: Status;
   error: string | null;
@@ -32,9 +33,17 @@ const getMovieDetail = createAsyncThunk(
   }
 );
 
+const getMovieById = createAsyncThunk(
+  "movie/getMovieById",
+  ({ id }: { id: number }) => {
+    return MovieService.getMovieById(id);
+  }
+);
+
 const initialState: State = {
   movies: [],
   movieDetail: null,
+  selectedMovie: null,
   filters: {
     search: "",
     genres: [],
@@ -79,9 +88,31 @@ const movieSlice = createSlice({
       state.status = "error";
       state.error = error.message || "Something went wrong";
     });
+    builder.addCase(getMovieById.fulfilled, (state, { payload }) => {
+      state.selectedMovie = payload;
+      state.status = "idle";
+      state.error = null;
+    });
+    builder.addCase(getMovieById.pending, (state, { meta }) => {
+      const existingMovie = state.movies.find((movie) => {
+        return movie.id === meta.arg.id;
+      });
+
+      if (existingMovie) {
+        state.selectedMovie = existingMovie;
+        state.status = "idle";
+        return;
+      }
+
+      state.status = "loading";
+    });
+    builder.addCase(getMovieById.rejected, (state, { error }) => {
+      state.status = "error";
+      state.error = error.message || "Something went wrong";
+    });
   },
 });
 
 export default movieSlice.reducer;
-export { getMovies, getMovieDetail };
+export { getMovies, getMovieDetail, getMovieById };
 export const { updateFilters, setMovies } = movieSlice.actions;
