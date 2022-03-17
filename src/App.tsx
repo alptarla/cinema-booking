@@ -14,7 +14,6 @@ function App() {
         dispatch(setUser(null));
         return;
       }
-
       dispatch(setUser({ id: user.uid, email: user.email! }));
     });
 

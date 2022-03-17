@@ -1,4 +1,4 @@
-import { Col, Row } from "react-bootstrap";
+import { Alert, Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Movie as IMovie } from "../../services/movie-service";
 import Movie from "./Movie";
@@ -8,6 +8,10 @@ interface Props {
 }
 
 function MovieList({ movies }: Props) {
+  if (!movies.length) {
+    return <Alert variant="warning">There are no movies this category!</Alert>;
+  }
+
   return (
     <Row
       className="g-3"
