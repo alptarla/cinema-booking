@@ -5,10 +5,9 @@ import { useParams } from "react-router-dom";
 import { SeatSelectionLoader } from "../components/loaders";
 import SeatSelectionHeader from "../components/SeatSelectionHeader";
 import { Salon } from "../services/salon-service";
-import StorageService from "../services/storage-service";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { getMovieById } from "../store/slices/movie-slice";
-import { getSalons } from "../store/slices/salon-slice";
+import { getSalons, saveSeats } from "../store/slices/salon-slice";
 
 type Seat = {
   key: string;
@@ -23,6 +22,7 @@ function SeatSelectionPage() {
     status: salonStatus,
     salons,
     error: salonError,
+    reservedSeats,
   } = useAppSelector((state) => state.salon);
   const { selectedMovie: movie } = useAppSelector((state) => state.movie);
 
@@ -61,26 +61,10 @@ function SeatSelectionPage() {
     };
   };
 
-  const seatsArr = selectedSalon?.seats.map((seat) => {
-    const seatItem = Object.entries(seat)[0];
-    return {
-      key: seatItem[0],
-      values: seatItem[1],
-    };
-  });
-
-  const saveSeats = () => {
-    const seats = StorageService.get(`salon-${selectedSalon?.id!}`);
-    let newSeats = [...selectedSeats];
-
-    if (Array.isArray(seats)) {
-      newSeats = [...newSeats, ...seats];
-    }
-
-    StorageService.set(`salon-${selectedSalon?.id!}`, newSeats);
-
-    // TODO: and display an alert such as success message
+  const handleSaveSeats = () => {
     setSelectedSeats([]);
+    dispatch(saveSeats({ salonId: selectedSalon?.id!, seats: selectedSeats }));
+    // TODO: and display an alert such as success message
   };
 
   const handleSalonChange = (salon: Salon) => {
@@ -89,11 +73,7 @@ function SeatSelectionPage() {
   };
 
   const checkIsAvailableSeat = (seat: Seat) => {
-    const seats = StorageService.get<Seat[]>(`salon-${selectedSalon?.id!}`);
-    console.log("seats", seats);
-    if (!seats) return false;
-
-    return seats.some((s) => {
+    return reservedSeats[selectedSalon?.id!]?.some((s) => {
       return s.key === seat.key && s.value === seat.value;
     });
   };
@@ -103,15 +83,23 @@ function SeatSelectionPage() {
       checkIsSeatSelected(seat) ? "bg-success" : "bg-secondary",
     ]);
 
+  const seatsArr = selectedSalon?.seats.map((seat) => {
+    const seatItem = Object.entries(seat)[0];
+    return {
+      key: seatItem[0],
+      values: seatItem[1],
+    };
+  });
+
   const renderRow = (key: string, values: number[]) => {
-    return values.map((val, i) => (
+    return values.map((value, i) => (
       <Button
-        className={getSeatClassNames({ key, value: val })}
+        className={getSeatClassNames({ key, value })}
         key={i}
-        disabled={i === 0 || !val || checkIsAvailableSeat({ key, value: val })}
-        onClick={selectSeat({ key, value: val })}
+        disabled={i === 0 || !value || checkIsAvailableSeat({ key, value })}
+        onClick={selectSeat({ key, value })}
       >
-        {!val ? "" : i === 0 ? key : `${key}-${val}`}
+        {!value ? "" : i === 0 ? key : `${key}-${value}`}
       </Button>
     ));
   };
@@ -128,7 +116,7 @@ function SeatSelectionPage() {
         size="sm"
         variant="success"
         disabled={!selectedSeats.length}
-        onClick={saveSeats}
+        onClick={handleSaveSeats}
       >
         {`Save Seats (${selectedSeats.length})`}
       </Button>
