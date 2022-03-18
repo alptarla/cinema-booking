@@ -1,7 +1,8 @@
 import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { Alert, Button, Card, Stack } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 import { SeatSelectionLoader } from "../components/loaders";
 import SeatSelectionHeader from "../components/SeatSelectionHeader";
 import { Salon } from "../services/salon-service";
@@ -28,6 +29,7 @@ function SeatSelectionPage() {
 
   const dispatch = useAppDispatch();
   const params = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getSalons())
@@ -64,7 +66,14 @@ function SeatSelectionPage() {
   const handleSaveSeats = () => {
     setSelectedSeats([]);
     dispatch(saveSeats({ salonId: selectedSalon?.id!, seats: selectedSeats }));
-    // TODO: and display an alert such as success message
+    Swal.fire({
+      title: "Success!",
+      text: "Seats are reserved successfully",
+      icon: "success",
+      confirmButtonText: "Cool",
+    }).then(() => {
+      navigate("/");
+    });
   };
 
   const handleSalonChange = (salon: Salon) => {
