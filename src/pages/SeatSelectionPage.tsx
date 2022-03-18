@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { SeatSelectionLoader } from "../components/loaders";
 import SeatSelectionHeader from "../components/SeatSelectionHeader";
 import { Salon } from "../services/salon-service";
+import StorageService from "../services/storage-service";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { getMovieById } from "../store/slices/movie-slice";
 import { getSalons } from "../store/slices/salon-slice";
@@ -60,6 +61,43 @@ function SeatSelectionPage() {
     };
   };
 
+  const seatsArr = selectedSalon?.seats.map((seat) => {
+    const seatItem = Object.entries(seat)[0];
+    return {
+      key: seatItem[0],
+      values: seatItem[1],
+    };
+  });
+
+  const saveSeats = () => {
+    const seats = StorageService.get(`salon-${selectedSalon?.id!}`);
+    let newSeats = [...selectedSeats];
+
+    if (Array.isArray(seats)) {
+      newSeats = [...newSeats, ...seats];
+    }
+
+    StorageService.set(`salon-${selectedSalon?.id!}`, newSeats);
+
+    // TODO: and display an alert such as success message
+    setSelectedSeats([]);
+  };
+
+  const handleSalonChange = (salon: Salon) => {
+    setSelectedSalon(salon);
+    setSelectedSeats([]);
+  };
+
+  const checkIsAvailableSeat = (seat: Seat) => {
+    const seats = StorageService.get<Seat[]>(`salon-${selectedSalon?.id!}`);
+    console.log("seats", seats);
+    if (!seats) return false;
+
+    return seats.some((s) => {
+      return s.key === seat.key && s.value === seat.value;
+    });
+  };
+
   const getSeatClassNames = (seat: Seat) =>
     classNames("w-100 text-white border-0 btn-sm btn-md-lg", [
       checkIsSeatSelected(seat) ? "bg-success" : "bg-secondary",
@@ -70,32 +108,12 @@ function SeatSelectionPage() {
       <Button
         className={getSeatClassNames({ key, value: val })}
         key={i}
-        disabled={i === 0 || !val}
+        disabled={i === 0 || !val || checkIsAvailableSeat({ key, value: val })}
         onClick={selectSeat({ key, value: val })}
       >
-        {i === 0 ? key : val}
+        {!val ? "" : i === 0 ? key : `${key}-${val}`}
       </Button>
     ));
-  };
-
-  const seatsArr = selectedSalon?.seats.map((seat) => {
-    const seatItem = Object.entries(seat)[0];
-    return {
-      key: seatItem[0],
-      values: seatItem[1],
-    };
-  });
-
-  const saveSeats = () => {
-    //  TODO: set seats to storage
-    console.log("selectedSeats", selectedSeats);
-    // TODO: and display an alert such as success message
-    setSelectedSeats([]);
-  };
-
-  const handleSalonChange = (salon: Salon) => {
-    setSelectedSalon(salon);
-    setSelectedSeats([]);
   };
 
   if (salonStatus === "loading") return <SeatSelectionLoader />;
