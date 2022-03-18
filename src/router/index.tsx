@@ -1,11 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import {
-  ErrorPage,
   HomePage,
   LoginPage,
   MovieDetailPage,
   NotFoundPage,
-  ProfilePage,
   RegisterPage,
   SeatSelectionPage,
 } from "../pages";
@@ -63,17 +61,6 @@ function Router() {
         }
       />
       <Route
-        path="/profile"
-        element={
-          <PrivateRoute
-            isAuthenticated={user !== null}
-            redirectPath="/login"
-          >
-            <ProfilePage />
-          </PrivateRoute>
-        }
-      />
-      <Route
         path="/seat-selection/:id"
         element={
           <PrivateRoute
@@ -83,10 +70,6 @@ function Router() {
             <SeatSelectionPage />
           </PrivateRoute>
         }
-      />
-      <Route
-        path="/error/:msg"
-        element={<ErrorPage />}
       />
       <Route
         path="*"

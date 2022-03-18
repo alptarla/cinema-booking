@@ -7,13 +7,11 @@ Cinema Booking is online a movie session shopping app off movies for cinema salo
 Users should be able to:
 
 - Login or register to app.
-- See all movies and paginate them.
+- See all movies.
 - Search movies.
 - Filter movies by its genres or availability.
 - See movie details.
-- Bookmark to movies.
 - Reserve a seat for available movies in seat selection page.
-- See own profile with includes movies history and bookmarks.
 
 ## Stack
 
@@ -22,7 +20,6 @@ Users should be able to:
 - React Bootstrap
 - Redux
 - Google Firebase
-- Jest
 - React icons
 
 ## Setup
