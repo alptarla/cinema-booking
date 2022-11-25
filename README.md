@@ -4,11 +4,11 @@
 
 Cinema Booking is an online movie booking app for cinema salons.
 
-## Screenshot
+### Screenshot
 
 ![Cinema Booking](./app-screenshot.png "Cinema Booking")
 
-Users should be able to:
+### Users should be able to:
 
 - Login or register to app.
 - See all movies.
