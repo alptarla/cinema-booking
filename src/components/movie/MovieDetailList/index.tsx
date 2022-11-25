@@ -1,6 +1,6 @@
+import { MovieDetail } from "@services/movie-service";
 import { FC } from "react";
 import { ListGroup } from "react-bootstrap";
-import { MovieDetail } from "../../../services/movie-service";
 
 type MovieDetailListProps = {
   movieDetail: MovieDetail;

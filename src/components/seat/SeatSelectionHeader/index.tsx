@@ -1,6 +1,6 @@
+import { Salon } from "@services/salon-service";
 import classNames from "classnames";
 import { Badge, Card, Stack } from "react-bootstrap";
-import { Salon } from "../../../services/salon-service";
 
 import { FC } from "react";
 

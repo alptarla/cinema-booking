@@ -1,7 +1,7 @@
+import { Genre } from "@services/genre-service";
 import classNames from "classnames";
 import { FC } from "react";
 import { Badge, Stack } from "react-bootstrap";
-import { Genre } from "../../../services/genre-service";
 
 type MovieFilterGenreListProps = {
   genres: Genre[];

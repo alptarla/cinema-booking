@@ -1,11 +1,11 @@
+import MovieListLoader from "@components/loaders/MovieListLoader";
+import MovieCardList from "@components/movie/MovieCardList";
+import MovieFilter from "@components/movie/MovieFilter";
+import { Movie } from "@services/movie-service";
+import { useAppDispatch, useAppSelector } from "@store/hooks";
+import { getMovies, setMovies } from "@store/slices/movie-slice";
 import { useEffect } from "react";
 import { Alert } from "react-bootstrap";
-import MovieListLoader from "../../components/loaders/MovieListLoader";
-import MovieCardList from "../../components/movie/MovieCardList";
-import MovieFilter from "../../components/movie/MovieFilter";
-import { Movie } from "../../services/movie-service";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { getMovies, setMovies } from "../../store/slices/movie-slice";
 
 const searchByKeyword = (movies: Movie[], keyword: string) => {
   const searchRegex = new RegExp(keyword, "i");

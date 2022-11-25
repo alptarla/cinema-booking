@@ -1,12 +1,12 @@
+import MovieDetailLoader from "@components/loaders/MovieDetailLoader";
+import MovieDetailList from "@components/movie/MovieDetailList";
+import { getWideImageUrl } from "@helpers/index";
+import { useAppDispatch, useAppSelector } from "@store/hooks";
+import { getMovieDetail } from "@store/slices/movie-slice";
 import { useEffect } from "react";
 import { Alert, Badge, Card, Stack } from "react-bootstrap";
 import { ImTicket } from "react-icons/im";
 import { Link, useParams } from "react-router-dom";
-import MovieDetailLoader from "../../components/loaders/MovieDetailLoader";
-import MovieDetailList from "../../components/movie/MovieDetailList";
-import { getWideImageUrl } from "../../helpers";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { getMovieDetail } from "../../store/slices/movie-slice";
 
 const MovieDetail = () => {
   const { status, error, movieDetail } = useAppSelector((state) => state.movie);

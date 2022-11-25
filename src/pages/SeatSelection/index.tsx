@@ -1,14 +1,14 @@
+import SeatSelectionLoader from "@components/loaders/SeatSelectionLoader";
+import SeatSelectionHeader from "@components/seat/SeatSelectionHeader";
+import { Salon } from "@services/salon-service";
+import { useAppDispatch, useAppSelector } from "@store/hooks";
+import { getMovieById } from "@store/slices/movie-slice";
+import { getSalons, saveSeats } from "@store/slices/salon-slice";
 import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { Alert, Button, Card, Stack } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import SeatSelectionLoader from "../../components/loaders/SeatSelectionLoader";
-import SeatSelectionHeader from "../../components/seat/SeatSelectionHeader";
-import { Salon } from "../../services/salon-service";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { getMovieById } from "../../store/slices/movie-slice";
-import { getSalons, saveSeats } from "../../store/slices/salon-slice";
 
 type Seat = {
   key: string;

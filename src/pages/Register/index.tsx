@@ -1,11 +1,11 @@
+import RegisterForm from "@components/forms/RegisterForm";
+import { useAppDispatch, useAppSelector } from "@store/hooks";
+import { resetError, signUp } from "@store/slices/auth-slice";
 import { useEffect } from "react";
 import { Alert, Card, Stack } from "react-bootstrap";
 import { FiLogIn } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import RegisterForm from "../../components/forms/RegisterForm";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { resetError, signUp } from "../../store/slices/auth-slice";
 
 interface IFormFields {
   email: string;

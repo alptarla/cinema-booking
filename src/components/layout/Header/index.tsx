@@ -1,8 +1,8 @@
+import { useAppDispatch, useAppSelector } from "@store/hooks";
+import { signOut } from "@store/slices/auth-slice";
 import { Button, Container, Stack } from "react-bootstrap";
 import { BiLogOut, BiMovie } from "react-icons/bi";
 import { Link } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { signOut } from "../../../store/slices/auth-slice";
 
 const Header = () => {
   const { user } = useAppSelector((state) => state.auth);

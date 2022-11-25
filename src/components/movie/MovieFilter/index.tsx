@@ -1,10 +1,10 @@
+import GenreListLoader from "@components/loaders/GenreListLoader";
+import { Genre } from "@services/genre-service";
+import { useAppDispatch, useAppSelector } from "@store/hooks";
+import { getGenres } from "@store/slices/genre-slice";
+import { Filters, updateFilters } from "@store/slices/movie-slice";
 import { useEffect, useState } from "react";
 import { Button, Stack } from "react-bootstrap";
-import GenreListLoader from "../../../components/loaders/GenreListLoader";
-import { Genre } from "../../../services/genre-service";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { getGenres } from "../../../store/slices/genre-slice";
-import { Filters, updateFilters } from "../../../store/slices/movie-slice";
 import MovieFilterGenreList from "../MovieFilterGenreList";
 import MovieFilterSearchBar from "../MovieFilterSearchBar";
 

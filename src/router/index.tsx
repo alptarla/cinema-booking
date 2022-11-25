@@ -1,11 +1,11 @@
+import Home from "@pages/Home";
+import Login from "@pages/Login";
+import MovieDetail from "@pages/MovieDetail";
+import NotFoundPage from "@pages/NotFound";
+import Register from "@pages/Register";
+import SeatSelection from "@pages/SeatSelection";
+import { useAppSelector } from "@store/hooks";
 import { Route, Routes } from "react-router-dom";
-import Home from "../pages/Home";
-import Login from "../pages/Login";
-import MovieDetail from "../pages/MovieDetail";
-import NotFoundPage from "../pages/NotFound";
-import Register from "../pages/Register";
-import SeatSelection from "../pages/SeatSelection";
-import { useAppSelector } from "../store/hooks";
 import AuthRoute from "./AuthRoute";
 import PrivateRoute from "./PrivateRoute";
 

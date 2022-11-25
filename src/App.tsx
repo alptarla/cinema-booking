@@ -1,12 +1,12 @@
+import Footer from "@components/layout/Footer";
+import Header from "@components/layout/Header";
+import { auth } from "@config/firebase";
+import Router from "@router/index";
+import { setUser } from "@store/slices/auth-slice";
 import { useEffect } from "react";
 import { Container } from "react-bootstrap";
 import { ToastContainer } from "react-toastify";
-import Footer from "./components/layout/Footer";
-import Header from "./components/layout/Header";
-import { auth } from "./config/firebase";
-import Router from "./router";
 import { useAppDispatch } from "./store/hooks";
-import { setUser } from "./store/slices/auth-slice";
 
 const App = () => {
   const dispatch = useAppDispatch();

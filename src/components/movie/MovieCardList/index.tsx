@@ -1,7 +1,7 @@
+import { Movie as IMovie } from "@services/movie-service";
 import { FC } from "react";
 import { Alert, Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { Movie as IMovie } from "../../../services/movie-service";
 import MovieCard from "../MovieCard";
 
 type MovieCardListProps = {
