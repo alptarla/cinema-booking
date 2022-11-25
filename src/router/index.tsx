@@ -1,17 +1,15 @@
 import { Route, Routes } from "react-router-dom";
-import {
-  HomePage,
-  LoginPage,
-  MovieDetailPage,
-  NotFoundPage,
-  RegisterPage,
-  SeatSelectionPage,
-} from "../pages";
+import Home from "../pages/Home";
+import Login from "../pages/Login";
+import MovieDetail from "../pages/MovieDetail";
+import NotFoundPage from "../pages/NotFound";
+import Register from "../pages/Register";
+import SeatSelection from "../pages/SeatSelection";
 import { useAppSelector } from "../store/hooks";
 import AuthRoute from "./AuthRoute";
 import PrivateRoute from "./PrivateRoute";
 
-function Router() {
+const Router = () => {
   const { user } = useAppSelector((state) => state.auth);
 
   return (
@@ -23,7 +21,7 @@ function Router() {
             isAuthenticated={user !== null}
             redirectPath="/login"
           >
-            <HomePage />
+            <Home />
           </PrivateRoute>
         }
       />
@@ -34,7 +32,7 @@ function Router() {
             isAuthenticated={user !== null}
             redirectPath="/"
           >
-            <LoginPage />
+            <Login />
           </AuthRoute>
         }
       />
@@ -45,7 +43,7 @@ function Router() {
             isAuthenticated={user !== null}
             redirectPath="/"
           >
-            <RegisterPage />
+            <Register />
           </AuthRoute>
         }
       />
@@ -56,7 +54,7 @@ function Router() {
             isAuthenticated={user !== null}
             redirectPath="/login"
           >
-            <MovieDetailPage />
+            <MovieDetail />
           </PrivateRoute>
         }
       />
@@ -67,7 +65,7 @@ function Router() {
             isAuthenticated={user !== null}
             redirectPath="/login"
           >
-            <SeatSelectionPage />
+            <SeatSelection />
           </PrivateRoute>
         }
       />
@@ -77,6 +75,6 @@ function Router() {
       />
     </Routes>
   );
-}
+};
 
 export default Router;

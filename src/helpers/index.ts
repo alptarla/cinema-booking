@@ -1,9 +1,7 @@
-function getSmallImageUrl(path: string) {
+export const getSmallImageUrl = (path: string) => {
   return `https://image.tmdb.org/t/p/w300${path}`;
-}
+};
 
-function getWideImageUrl(path: string) {
+export const getWideImageUrl = (path: string) => {
   return `https://image.tmdb.org/t/p/original${path}`;
-}
-
-export { getSmallImageUrl, getWideImageUrl };
+};
