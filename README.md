@@ -2,7 +2,11 @@
 
 ## Overview
 
-Cinema Booking is online a movie session shopping app off movies for cinema salons.
+Cinema Booking is an online movie booking app for cinema salons.
+
+## Screenshot
+
+![Cinema Booking](./app-screenshot.png "Cinema Booking")
 
 Users should be able to:
 
@@ -43,3 +47,8 @@ cd cinema-booking
 npm install
 npm start
 ```
+
+### Test User Credentials
+
+- email - test@test.com
+- password - test1234
